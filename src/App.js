@@ -1,15 +1,32 @@
 import logo from './logo.svg';
-import './App.css';
+import TodoFeature from './features/Todo';
+import AlbumFeature from './features/Album';
+import ColorBox from './components/ColorBox';
+import { Redirect, Route } from 'react-router';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import { Link, NavLink, Switch } from 'react-router-dom';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Dao Nguyen
-        </p>
-      </header>
+      <Header />
+      <p><NavLink to="/todos" activeClassName="active-menu" >Todos</NavLink></p>
+      <p><NavLink to="/albums" activeClassName="active">Albums</NavLink></p>
+
+      <Switch>
+        <Redirect from="/home" to="/" exact />
+        <Redirect from="/post-list/:postId" to="/post/:postId" exact />
+
+        <Route path="/" component={TodoFeature} exact />
+        <Route path="/todos" component={TodoFeature} />
+        <Route path="/albums" component={AlbumFeature} />
+
+        <Route component={NotFound} />
+      </Switch>
+
+      <Footer />
     </div>
   );
 }
